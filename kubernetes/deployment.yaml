@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: vitorcruz
+  labels:
+    app: playlist-recommender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-recommender
+  template:
+    metadata:
+      labels:
+        app: playlist-recommender
+    spec:
+      containers:
+        - name: api-container
+          image: vitorugoc/api-container:0.3
+          ports:
+            - containerPort: 52063
+          env:
+            - name: FLASK_ENV
+              value: "production"
+            - name: FLASK_APP
+              value: "rest_api_server.py"
+          volumeMounts:
+            - name: dataset-storage
+              mountPath: /mnt/shared
+
+        - name: watcher-container
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                inotifywait -e modify /mnt/shared/rules.pickle && kill 1;
+              done
+          volumeMounts:
+            - name: dataset-storage
+              mountPath: /mnt/shared
+
+      volumes:
+        - name: dataset-storage
+          persistentVolumeClaim:
+            claimName: project2-pv2-vitorcruz

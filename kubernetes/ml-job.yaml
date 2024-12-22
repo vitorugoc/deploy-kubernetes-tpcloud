@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ml-job
+  namespace: vitorcruz
+spec:
+  template:
+    metadata:
+      labels:
+        app: playlist-recommender
+    spec:
+      containers:
+        - name: ml-container
+          image: vitorugoc/ml-container:0.7
+          command: ["python3", "/app/playlist_rules_generator.py"]
+          env:
+            - name: DATASET_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: dataset-config
+                  key: dataset-path
+          volumeMounts:
+            - name: dataset-storage
+              mountPath: /mnt/shared
+      restartPolicy: Never
+      volumes:
+        - name: dataset-storage
+          persistentVolumeClaim:
+            claimName: project2-pv2-vitorcruz
+  backoffLimit: 1

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: playlist-recommender-service
+  namespace: vitorcruz
+spec:
+  selector:
+    app: playlist-recommender
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 52063
+  type: ClusterIP
