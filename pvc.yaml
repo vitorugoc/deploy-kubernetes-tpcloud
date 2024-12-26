@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: vitorcruz
+  name: project2-pvc2-vitorcruz
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: default-storage-class-vitorcruz
+  selector:
+    matchLabels:
+      type: local
+      namespace: vitorcruz

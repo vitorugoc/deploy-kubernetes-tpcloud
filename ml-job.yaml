@@ -26,5 +26,5 @@ spec:
       volumes:
         - name: dataset-storage
           persistentVolumeClaim:
-            claimName: project2-pv2-vitorcruz
+            claimName: project2-pvc2-vitorcruz
   backoffLimit: 1
