@@ -11,6 +11,5 @@ spec:
       storage: 1Gi
   storageClassName: default-storage-class-vitorcruz
   selector:
-    matchLabels:
-      type: local
+    matchLabels:  
       namespace: vitorcruz
