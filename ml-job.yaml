@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: ml-container
-          image: vitorugoc/ml-container:0.7
+          image: vitorugoc/ml-container:0.8
           command: ["python3", "/app/playlist_rules_generator.py"]
           env:
             - name: DATASET_PATH
