@@ -38,8 +38,7 @@ spec:
             - -c
             - |
               while true; do
-                inotifywait -e modify,create,delete,move /mnt/shared && \
-                kubectl rollout restart deployment/api-deployment -n vitorcruz;
+                inotifywait -e modify,create,delete,move /mnt/shared && kill -SIGHUP 1;
               done
           volumeMounts:
             - name: dataset-storage
