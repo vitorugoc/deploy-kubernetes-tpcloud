@@ -36,7 +36,7 @@ spec:
             - -c
             - |
               while true; do
-                inotifywait -e modify /mnt/shared/rules.pickle && kill 1;
+                inotifywait -e modify,create,delete,move /mnt/shared && kill -SIGHUP 1;
               done
           volumeMounts:
             - name: dataset-storage
